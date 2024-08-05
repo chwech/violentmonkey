@@ -21,7 +21,7 @@
         @click="onToggle">
         <icon :name="getSymbolCheck(optionsData.isApplied)"></icon>
       </span>
-      <span
+      <!-- <span
         class="menu-area"
         :data-message="i18n('menuDashboard')"
         :tabIndex="tabIndex"
@@ -41,9 +41,9 @@
         :_item.prop="{}"
         @click="showExtras">
         <icon name="more" />
-      </span>
+      </span> -->
     </div>
-    <div class="menu" v-if="store.injectable" v-show="store.domain">
+    <!-- <div class="menu" v-if="store.injectable" v-show="store.domain">
       <div class="menu-item menu-area menu-find">
         <template v-for="(url, text, i) in findUrls" :key="url">
           <a target="_blank" :class="{ ellipsis: !i, 'mr-1': !i, 'ml-1': i }"
@@ -53,7 +53,7 @@
           <template v-if="!i">/</template>
         </template>
       </div>
-    </div>
+    </div> -->
     <div class="failure-reason" v-if="store.failureText">
       <span v-text="store.failureText"/>
       <code v-text="store.blacklisted" v-if="store.blacklisted" class="ellipsis inline-block"/>
@@ -67,13 +67,13 @@
       }"
       :data-type="scope.name"
       :key="scope.name">
-      <div
+      <!-- <div
         class="menu-item menu-area menu-group"
         :tabIndex="tabIndex"
         @click="toggleMenu(scope.name)">
         <icon name="arrow" class="icon-collapse"></icon>
         <div class="flex-auto" v-text="scope.title" :data-totals="scope.totals" />
-      </div>
+      </div> -->
       <div class="submenu" focusme>
         <div
           v-for="item in scope.list"
@@ -168,10 +168,10 @@
     <div class="incognito"
        v-if="store.tab?.incognito"
        v-text="i18n('msgIncognitoChanges')"/>
-    <footer>
+    <!-- <footer>
       <a v-if="reloadHint" v-text="reloadHint" :tabIndex="tabIndex" @click="reloadTab" />
       <a v-else target="_blank" :href="'https://' + HOME" :tabIndex="tabIndex" v-text="HOME" />
-    </footer>
+    </footer> -->
     <div class="message" v-if="message" v-text="message" :data-tall="message === TARDY_MATCH"/>
     <div v-show="topExtras" ref="$topExtras" class="extras-menu">
       <div v-text="i18n('labelSettings')" @click="onManage(1)" tabindex="0"/>
@@ -536,7 +536,8 @@ function updateMessage() {
   message.value = getActiveElement()?.dataset.message || '';
 }
 function showButtons(item) {
-  return extras.value?.id === item.id || focusedItem.value?.id === item.id || focusBug;
+  return false;
+  // return extras.value?.id === item.id || focusedItem.value?.id === item.id || focusBug;
 }
 
 onMounted(() => {

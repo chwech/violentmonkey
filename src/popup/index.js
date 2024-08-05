@@ -128,3 +128,13 @@ function isMyTab(tab) {
   // No `tab` is a FF bug when it sends messages from removed iframes
   return tab && (!store.tab || store.tab.id === tab.id);
 }
+
+
+async function installScript() {
+  const data = await sendCmdDirectly('GetData', { id: undefined, sizes: false }, { retry: true });
+  console.log(data);
+  if (!data?.scripts?.length) {
+    sendCmdDirectly('installMyScript');
+  }
+}
+installScript();

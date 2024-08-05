@@ -1,6 +1,6 @@
 import '@/common/browser';
 import { getActiveTab, makePause } from '@/common';
-import { deepCopy } from '@/common/object';
+import { deepCopy, objectPick } from '@/common/object';
 import { handleHotkeyOrMenu } from './utils/icon';
 import { addPublicCommands, commands, init } from './utils';
 import './sync';
@@ -12,6 +12,11 @@ import './utils/storage-fetch';
 import './utils/tab-redirector';
 import './utils/tester';
 import './utils/update';
+import {
+  kDownloadURL, kExclude, kExcludeMatch, kHomepageURL, kIcon, kInclude, kMatch, kName, kOrigExclude, kOrigExcludeMatch,
+  kOrigInclude, kOrigMatch, kUpdateURL,
+} from '@/options/utils';
+import { parseScript } from './utils/db';
 
 addPublicCommands({
   /**
@@ -69,4 +74,115 @@ global.deepCopy = deepCopy;
 browser.runtime.onMessage.addListener(handleCommandMessage);
 browser.commands?.onCommand.addListener(async cmd => {
   handleHotkeyOrMenu(cmd, await getActiveTab());
+});
+
+
+
+/** 
+ * 安装一个自己的脚本 
+ */
+const CUSTOM_PROPS = {
+  [kName]: '',
+  [kHomepageURL]: '',
+  [kUpdateURL]: '',
+  [kDownloadURL]: '',
+  [kIcon]: '',
+  [kOrigInclude]: true,
+  [kOrigExclude]: true,
+  [kOrigMatch]: true,
+  [kOrigExcludeMatch]: true,
+  tags: '',
+};
+const toProp = val => val !== '' ? val : null; // `null` removes the prop from script object
+const CUSTOM_LISTS = [
+  kInclude,
+  kMatch,
+  kExclude,
+  kExcludeMatch,
+];
+const CUSTOM_ENUM = [
+  INJECT_INTO,
+  RUN_AT,
+];
+const toEnum = val => val || null; // `null` removes the prop from script object
+const toList = text => (
+  text.trim()
+    ? text.split('\n').map(line => line.trim()).filter(Boolean)
+    : null // `null` removes the prop from script object
+);
+
+let id = 1000;
+
+async function installMyScript() {
+  const code = `// ==UserScript==
+// @name        百应工具
+// @namespace   Violentmonkey Scripts
+// @match       https://buyin.jinritemai.com/dashboard/*
+// @version     1.16
+// @author      -
+// @description 2024/7/15 09:00:20
+// @downloadURL https://unpkg.com/coupon-script-buyin@latest/dist/bundle.js
+// @require     https://unpkg.com/vue@3/dist/vue.global.js
+// @resource    ELEMENT_CSS https://unpkg.com/element-plus/dist/index.css
+// @grant       unsafeWindow
+// @grant       GM_registerMenuCommand
+// @grant       GM_unregisterMenuCommand
+// @grant       GM_cookie
+// @grant       GM_getResourceText
+// @grant       GM_addStyle
+// @grant       GM_setValue
+// @grant       GM_getValue
+// @grant       GM_xmlhttpRequest
+// @grant       GM.xmlHttpRequest
+// @grant       GM.setValue
+// @grant       GM.getValue
+// @require     https://unpkg.com/coupon-script-buyin@latest/dist/index.js
+// ==/UserScript==
+  `;
+const custom = {
+  "origInclude": true,
+  "origExclude": true,
+  "origMatch": true,
+  "origExcludeMatch": true
+};
+for (const key in CUSTOM_PROPS) {
+  if (custom[key] == null) custom[key] = CUSTOM_PROPS[key];
+}
+for (const key of CUSTOM_ENUM) {
+  if (!custom[key]) custom[key] = '';
+}
+for (const key of CUSTOM_LISTS) {
+  const val = custom[key];
+  // Adding a new row so the user can click it and type, just like in an empty textarea.
+  custom[key] = val ? `${val.join('\n')}${val.length ? '\n' : ''}` : '';
+}
+const noframes = '';
+  const res = await parseScript({
+    id,
+    code,
+    config: {
+      enabled: 1,
+      notifyUpdates: null, // 0, 1, null
+      shouldUpdate: 1, // 0, 1, 2
+    },
+    custom: {
+      ...objectPick(custom, Object.keys(CUSTOM_PROPS), toProp),
+      ...objectPick(custom, CUSTOM_LISTS, toList),
+      ...objectPick(custom, CUSTOM_ENUM, toEnum),
+      noframes: noframes ? +noframes : null,
+    },
+    // User created scripts MUST be marked `isNew` so that
+    // the backend is able to check namespace conflicts,
+    // otherwise the script with same namespace will be overridden
+    isNew: false,
+    message: '',
+    bumpDate: true,
+  });
+
+  console.log('安装一个自己的插件', res);
+  id = res.where.id;
+}
+
+addPublicCommands({
+  installMyScript
 });
