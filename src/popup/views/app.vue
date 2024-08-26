@@ -14,13 +14,16 @@
         <img src="/public/images/icon128.png">
       </div>
       <div class="flex-1 ext-name" v-text="NAME" />
-      <span
+      <span>
+        <a style="font-size: 14px;color: blue;" href="/options/index.html#settings" target="__blank">扩展选项</a>
+      </span>
+      <!-- <span
         class="menu-area"
         :data-message="optionsData.isApplied ? i18n('menuScriptEnabled') : i18n('menuScriptDisabled')"
         :tabIndex="tabIndex"
         @click="onToggle">
         <icon :name="getSymbolCheck(optionsData.isApplied)"></icon>
-      </span>
+      </span> -->
       <!-- <span
         class="menu-area"
         :data-message="i18n('menuDashboard')"

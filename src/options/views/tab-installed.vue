@@ -14,14 +14,14 @@
                 </a>
               </Tooltip>
               <template #content>
-                <a
+                <!-- <a
                   class="dropdown-menu-item"
                   v-text="i18n('buttonNew')"
                   tabindex="0"
                   @click.prevent="handleEditScript('_new')"
                 />
                 <a class="dropdown-menu-item" v-text="i18n('installFrom', 'OpenUserJS')" href="https://openuserjs.org/" target="_blank" rel="noopener noreferrer"></a>
-                <a class="dropdown-menu-item" v-text="i18n('installFrom', 'GreasyFork')" href="https://greasyfork.org/scripts" target="_blank" rel="noopener noreferrer"></a>
+                <a class="dropdown-menu-item" v-text="i18n('installFrom', 'GreasyFork')" href="https://greasyfork.org/scripts" target="_blank" rel="noopener noreferrer"></a> -->
                 <a
                   class="dropdown-menu-item"
                   v-text="i18n('buttonInstallFromURL')"
@@ -30,13 +30,13 @@
                 />
               </template>
             </Dropdown>
-            <Tooltip :content="i18n('updateScriptsAll')" placement="bottom" align="start">
+            <!-- <Tooltip :content="i18n('updateScriptsAll')" placement="bottom" align="start">
               <a class="btn-ghost" tabindex="0" @click="handleActionUpdate(null, $event.target)">
                 <Icon name="refresh" />
               </a>
-            </Tooltip>
+            </Tooltip> -->
           </div>
-          <div v-if="state.filteredScripts.length" class="btn-group">
+          <!-- <div v-if="state.filteredScripts.length" class="btn-group">
             <a
               v-for="({ icon, num }, key) in batchActions" :key="key"
               class="btn-ghost"
@@ -58,11 +58,11 @@
                 <Icon name="undo" />
               </a>
             </Tooltip>
-          </div>
+          </div> -->
         </template>
         <div v-else class="ml-2" v-text="i18n('headerRecycleBin')" />
         <div class="flex-auto"></div>
-        <LocaleGroup i18n-key="labelFilterSort" class="ml-1">
+        <!-- <LocaleGroup i18n-key="labelFilterSort" class="ml-1">
           <select :value="filters.sort" @change="handleOrderChange" class="h-100">
             <option
               v-for="(option, name) in filterOptions.sort"
@@ -91,9 +91,9 @@
               <SettingCheck name="filters.viewSingleColumn" :label="i18n('labelViewSingleColumn')" />
             </div>
           </template>
-        </Dropdown>
+        </Dropdown> -->
         <!-- form and id are required for the built-in autocomplete using entered values -->
-        <form class="filter-search hidden-xs" @submit.prevent
+        <!-- <form class="filter-search hidden-xs" @submit.prevent
               :style="{ 'min-width': '10em', 'max-width': 5 + Math.max(20, state.search.value.length) + 'ex' }">
           <label>
             <input
@@ -117,7 +117,7 @@
               <div v-html="i18n('titleSearchHintV2')" />
             </div>
           </template>
-        </Dropdown>
+        </Dropdown> -->
       </header>
       <div v-if="showRecycle" class="hint mx-1 my-1 flex flex-col">
         <span v-text="i18n('hintRecycleBin')"/>

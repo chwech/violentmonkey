@@ -73,11 +73,11 @@
     </div>
     <div class="script-buttons script-buttons-left">
       <template v-if="canRender">
-        <tooltip :content="i18n('buttonEdit')" align="start">
+        <!-- <tooltip :content="i18n('buttonEdit')" align="start">
           <a class="btn-ghost" :href="url" :data-hotkey="hotkeys.edit" :tabIndex="tabIndex">
             <icon name="code"></icon>
           </a>
-        </tooltip>
+        </tooltip> -->
         <template v-if="!script.config.removed">
           <tooltip :content="labelEnable" align="start">
             <a
@@ -102,7 +102,7 @@
           </tooltip>
         </template>
         <span class="sep"></span>
-        <tooltip :disabled="!description" :content="description" align="start">
+        <!-- <tooltip :disabled="!description" :content="description" align="start">
           <a class="btn-ghost" :tabIndex="description ? tabIndex : -1" @click="toggleTip">
             <icon name="info"></icon>
           </a>
@@ -117,7 +117,7 @@
             :tabIndex="url ? tabIndex : -1">
             <icon :name="icon"/>
           </a>
-        </tooltip>
+        </tooltip> -->
         <!-- Using v-if to actually hide it because FF is slow to apply :not(:empty) CSS -->
         <div class="script-message" v-if="script.message" v-text="script.message"
              :title="script.error"/>

@@ -37,6 +37,7 @@ module.exports = {
       ExportDeclaration: { minProperties: 8, multiline: true, consistent: true },
     }],
     'semi': ['error'],
+    'no-unused-vars': 0
   },
   overrides: [{
     // `browser` is a local variable since we remove the global `chrome` and `browser` in injected*

@@ -130,11 +130,11 @@ function isMyTab(tab) {
 }
 
 
-async function installScript() {
-  const data = await sendCmdDirectly('GetData', { id: undefined, sizes: false }, { retry: true });
-  console.log(data);
-  if (!data?.scripts?.length) {
-    sendCmdDirectly('installMyScript');
-  }
-}
-installScript();
+// async function installScript() {
+//   const data = await sendCmdDirectly('GetData', { id: undefined, sizes: false }, { retry: true });
+//   console.log(data);
+//   if (!data?.scripts?.length) {
+//     sendCmdDirectly('installMyScript');
+//   }
+// }
+// installScript();
