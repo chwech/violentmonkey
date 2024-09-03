@@ -57,10 +57,10 @@
         </template>
       </div>
     </div> -->
-    <div class="failure-reason" v-if="store.failureText">
+    <!-- <div class="failure-reason" v-if="store.failureText">
       <span v-text="store.failureText"/>
       <code v-text="store.blacklisted" v-if="store.blacklisted" class="ellipsis inline-block"/>
-    </div>
+    </div> -->
     <div
       v-for="scope in injectionScopes"
       class="menu menu-scripts flex flex-col"
@@ -162,12 +162,12 @@
         </div>
       </div>
     </div>
-    <div class="failure-reason" v-if="store.injectionFailure">
+    <!-- <div class="failure-reason" v-if="store.injectionFailure">
       <div v-text="i18n('menuInjectionFailed')"/>
       <a v-text="i18n('menuInjectionFailedFix')" href="#"
          v-if="store.injectionFailure.fixable"
          @click.prevent="onInjectionFailureFix"/>
-    </div>
+    </div> -->
     <div class="incognito"
        v-if="store.tab?.incognito"
        v-text="i18n('msgIncognitoChanges')"/>
